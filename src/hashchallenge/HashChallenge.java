@@ -25,23 +25,41 @@ import java.util.TreeMap;
  */
 public class HashChallenge {
 
-    private List<String> input;
+    private final List<String> input;
     private List<String> output;
 
-    private List<Integer> endpoints;
+    private final List<Integer> vercx;
     //private List<Integer> videos;
-    private Map<Integer, Integer> videos;
+    private final Map<Integer, Integer> videos;
     private Map<Integer, Integer> sortedVideos;
-    private List<List<Integer>> latencies;
-    private List<List<Integer>> requests;
-
+    private final List<List<Integer>> latencies;
+    private final List<List<Integer>> requests;
+    private List<List<Integer>> videosInEndpoint;
+    private EndPoint[] endpoints;
+    
     public HashChallenge(String input) throws IOException {
         this.input = Files.readAllLines(Paths.get(input), StandardCharsets.UTF_8);
-        endpoints = new ArrayList<>();
+        vercx = new ArrayList<>();
         //videos = new ArrayList<>();
         videos = new TreeMap<>();
         latencies = new ArrayList<>();
-        requests = new ArrayList<>();
+        requests = new ArrayList<>();        
+    }
+    
+    private void binPacking(){
+        int ServerAmount = vercx.get(3);
+        int ServerSize = vercx.get(4);
+        
+    }
+    
+    private void initEndpoints(){
+        endpoints = new EndPoint[vercx.get(1)];
+        for (List<Integer> latency : latencies){
+            
+            
+        }
+        
+        
     }
 
     private void sortVideosBySize() {
@@ -55,15 +73,13 @@ public class HashChallenge {
         list.forEach((entry) -> {
             sortedVideos.put(entry.getKey(), entry.getValue());
         });
-        System.out.println(sortedVideos);
-        
-
+        //System.out.println(sortedVideos);
     }
 
     private void parseInput() {
         List<String> temp = Arrays.asList(input.get(0).split(" "));
 
-        temp.forEach(s -> endpoints.add(Integer.parseInt(s)));
+        temp.forEach(s -> vercx.add(Integer.parseInt(s)));
         //System.out.println(endpoints);        
         temp = Arrays.asList(input.get(1).split(" "));
         //temp.forEach(s -> videos.add(Integer.parseInt(s)));
