@@ -13,6 +13,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  *
@@ -23,15 +25,18 @@ public class HashChallenge {
     private List<String> input;
     private List<String> output;
 
+    
     private List<Integer> endpoints;
-    private List<Integer> videos;
+    //private List<Integer> videos;
+    private Map<Integer, Integer> videos;
     private List<List<Integer>> latencies;
     private List<List<Integer>> requests;
-
+    
     public HashChallenge(String input) throws IOException {
         this.input = Files.readAllLines(Paths.get(input), StandardCharsets.UTF_8);
         endpoints = new ArrayList<>();
-        videos = new ArrayList<>();
+        //videos = new ArrayList<>();
+        videos = new TreeMap<>();
         latencies = new ArrayList<>();
         requests = new ArrayList<>();
     }
@@ -43,7 +48,11 @@ public class HashChallenge {
         //System.out.println(endpoints);
         
         temp = Arrays.asList(input.get(1).split(" "));
-        temp.forEach(s -> videos.add(Integer.parseInt(s)));
+        //temp.forEach(s -> videos.add(Integer.parseInt(s)));
+        
+        for (int i =0; i< temp.size(); i++){
+            videos.put(i, Integer.parseInt(temp.get(i)));
+        }
         //System.out.println(videos);
 
         for (int i = 2; i < input.size(); i++) {
