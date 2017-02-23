@@ -36,6 +36,13 @@ public class HashChallenge {
     private void parseInput(){
         endpoints = Arrays.asList(input.get(0).split(" "));
         videos = Arrays.asList(input.get(1).split(" "));
+        for (int i = 2; i< input.size(); i++){
+            List<String> temp = Arrays.asList(input.get(i).split(" "));
+            if (temp.size()==2){
+                
+            }
+            
+        }
         
         
         
