@@ -10,6 +10,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -21,11 +22,26 @@ public class HashChallenge {
     private List<String> input;
     private List<String> output;
     
+    private List<String> endpoints;
+    private List<String> videos;
+    private List<String> latencies;
+    private List<String> requests;
+    
     public HashChallenge(String input) throws IOException{
         this.input = Files.readAllLines(Paths.get(input), StandardCharsets.UTF_8);
         
         
     }
+    
+    private void parseInput(){
+        endpoints = Arrays.asList(input.get(0).split(" "));
+        videos = Arrays.asList(input.get(1).split(" "));
+        
+        
+        
+        
+    }
+    
     
     
     private void output() throws IOException{
