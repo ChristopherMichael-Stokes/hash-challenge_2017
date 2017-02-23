@@ -5,17 +5,21 @@
  */
 package hashchallenge;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author chris
  */
 public class EndPoint {
     private int latencyToDatacentre;
-    private int[][] latencyToCache;
+    private List<List<Integer>> latencyToCache;
     
-    public EndPoint(int latencyToDatacentre,int[][] latencyToCache){
+    public EndPoint(int latencyToDatacentre){
         this.latencyToDatacentre=latencyToDatacentre;
         this.latencyToCache=latencyToCache;
+        latencyToCache = new ArrayList<>();
     }
 
     public int getLatencyToDatacentre() {
@@ -26,14 +30,13 @@ public class EndPoint {
         this.latencyToDatacentre = latencyToDatacentre;
     }
 
-    public int[][] getLatencyToCache() {
+    public List<List<Integer>> getLatenciesToCache(){
         return latencyToCache;
     }
-
-    public void setLatencyToCache(int[][] latencyToCache) {
-        this.latencyToCache = latencyToCache;
+    public void addLatencyToCache(List<Integer> latencyToCache){
+        this.latencyToCache.add(latencyToCache);
+        
     }
-    
     
     
     
