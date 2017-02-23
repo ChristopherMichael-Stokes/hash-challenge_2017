@@ -36,40 +36,47 @@ public class HashChallenge {
     private final List<List<Integer>> requests;
     private List<List<Integer>> videosInEndpoint;
     private EndPoint[] endpoints;
-    
+
     public HashChallenge(String input) throws IOException {
         this.input = Files.readAllLines(Paths.get(input), StandardCharsets.UTF_8);
         vercx = new ArrayList<>();
         //videos = new ArrayList<>();
         videos = new TreeMap<>();
         latencies = new ArrayList<>();
-        requests = new ArrayList<>();        
+        requests = new ArrayList<>();
     }
-    
-    private void binPacking(){
+
+    private void binPacking() {
         int ServerAmount = vercx.get(3);
         int ServerSize = vercx.get(4);
-        
+
     }
-    
-    private void initEndpoints(){
-        endpoints = new EndPoint[vercx.get(1)];
-        for (List<Integer> latency : latencies){
-            
+
+    private void initEndpoints() {
+        int amountOfEndpoints = vercx.get(1);
+        endpoints = new EndPoint[amountOfEndpoints];
+        int count = 0;
+        int endpoint = 0;
+
+        while (count < amountOfEndpoints) {
+            if (latencies.get(count).get(1) > amountOfEndpoints) {
+                endpoints[endpoint].addLatencyToCache(latencies.get(count));
+            } else {
+                endpoints[endpoint] = new EndPoint(latencies.get(count).get(0));
+                endpoint++;
+            }
             
         }
-        
-        
     }
 
     private void sortVideosBySize() {
         List<Map.Entry<Integer, Integer>> list
                 = new LinkedList<>(videos.entrySet());
-        Collections.sort(list, 
+        Collections.sort(list,
                 (Map.Entry<Integer, Integer> o1, Map.Entry<Integer, Integer> o2)
-                        -> (o2.getValue()).compareTo(o1.getValue()));
+                -> (o2.getValue()).compareTo(o1.getValue()));
         sortedVideos = new LinkedHashMap<>();
-        
+
         list.forEach((entry) -> {
             sortedVideos.put(entry.getKey(), entry.getValue());
         });
@@ -101,6 +108,7 @@ public class HashChallenge {
             } else if (temp.size() == 3) {
                 requests.add(tempInts);
             }
+            initEndpoints();
         }
         //System.out.println(latencies);
         //System.out.println(requests);
