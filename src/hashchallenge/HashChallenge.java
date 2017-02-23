@@ -22,16 +22,14 @@ public class HashChallenge {
     private List<String> output;
     
     public HashChallenge(String input) throws IOException{
-        this.input = Files.readAllLines(Paths.get("src/HashChallenge/"+input), StandardCharsets.UTF_8);
+        this.input = Files.readAllLines(Paths.get(input), StandardCharsets.UTF_8);
         
         
     }
     
     
     private void output() throws IOException{
-        Files.write(Paths.get("output.txt"),output,Charset.defaultCharset());
-        
-        
+        Files.write(Paths.get("output.txt"),output,Charset.defaultCharset());       
         
     }
     
@@ -41,8 +39,9 @@ public class HashChallenge {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         // TODO code application logic here
+        HashChallenge hc = new HashChallenge("data/meet_at_the_zoo.in");
     }
     
 }
