@@ -12,6 +12,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -26,14 +28,13 @@ public class HashChallenge {
     private List<String> input;
     private List<String> output;
 
-    
     private List<Integer> endpoints;
     //private List<Integer> videos;
     private Map<Integer, Integer> videos;
     private Map<Integer, Integer> sortedVideos;
     private List<List<Integer>> latencies;
     private List<List<Integer>> requests;
-    
+
     public HashChallenge(String input) throws IOException {
         this.input = Files.readAllLines(Paths.get(input), StandardCharsets.UTF_8);
         endpoints = new ArrayList<>();
@@ -42,14 +43,21 @@ public class HashChallenge {
         latencies = new ArrayList<>();
         requests = new ArrayList<>();
     }
-    
-    private void sortVideosBySize(){
-        List<Map.Entry<Integer, Integer>> list =
-                new LinkedList<Map.Entry<Integer,Integer>>(videos.entrySet());
+
+    private void sortVideosBySize() {
+        List<Map.Entry<Integer, Integer>> list
+                = new LinkedList<>(videos.entrySet());
+        Collections.sort(list, 
+                (Map.Entry<Integer, Integer> o1, Map.Entry<Integer, Integer> o2)
+                        -> (o2.getValue()).compareTo(o1.getValue()));
+        sortedVideos = new LinkedHashMap<>();
         
+        list.forEach((entry) -> {
+            sortedVideos.put(entry.getKey(), entry.getValue());
+        });
+        System.out.println(sortedVideos);
         
-        
-        
+
     }
 
     private void parseInput() {
@@ -59,10 +67,11 @@ public class HashChallenge {
         //System.out.println(endpoints);        
         temp = Arrays.asList(input.get(1).split(" "));
         //temp.forEach(s -> videos.add(Integer.parseInt(s)));
-        
-        for (int i =0; i< temp.size(); i++){
+
+        for (int i = 0; i < temp.size(); i++) {
             videos.put(i, Integer.parseInt(temp.get(i)));
         }
+        sortVideosBySize();
         //System.out.println(videos);
 
         for (int i = 2; i < input.size(); i++) {
@@ -70,7 +79,7 @@ public class HashChallenge {
             List<Integer> tempInts = new ArrayList<>();
 
             temp.forEach(s -> tempInts.add(Integer.parseInt(s)));
-                        
+
             if (temp.size() == 2) {
                 latencies.add(tempInts);
             } else if (temp.size() == 3) {
@@ -83,7 +92,7 @@ public class HashChallenge {
     }
 
     private void output() throws IOException {
-        Files.write(Paths.get("out_"+input+".txt"), output, Charset.defaultCharset());
+        Files.write(Paths.get("out_" + input + ".txt"), output, Charset.defaultCharset());
 
     }
 
@@ -93,14 +102,14 @@ public class HashChallenge {
      */
     public static void main(String[] args) throws IOException {
         // TODO code application logic here
-        String[] inputs = new String[]{"kittens","me_at_the_zoo",
-            "trending_today","videos_worth_spreading"};
-        
-        for (String input : inputs){
-           HashChallenge hc = new HashChallenge("data/"+input+".in");
-           hc.parseInput();     
+        String[] inputs = new String[]{"kittens", "me_at_the_zoo",
+            "trending_today", "videos_worth_spreading"};
+
+        for (String input : inputs) {
+            HashChallenge hc = new HashChallenge("data/" + input + ".in");
+            hc.parseInput();
         }
-        
+
     }
 
 }
