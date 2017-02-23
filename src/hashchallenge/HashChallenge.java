@@ -12,6 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -29,6 +30,7 @@ public class HashChallenge {
     private List<Integer> endpoints;
     //private List<Integer> videos;
     private Map<Integer, Integer> videos;
+    private Map<Integer, Integer> sortedVideos;
     private List<List<Integer>> latencies;
     private List<List<Integer>> requests;
     
@@ -40,13 +42,21 @@ public class HashChallenge {
         latencies = new ArrayList<>();
         requests = new ArrayList<>();
     }
+    
+    private void sortVideosBySize(){
+        List<Map.Entry<Integer, Integer>> list =
+                new LinkedList<Map.Entry<Integer,Integer>>(videos.entrySet());
+        
+        
+        
+        
+    }
 
     private void parseInput() {
         List<String> temp = Arrays.asList(input.get(0).split(" "));
 
         temp.forEach(s -> endpoints.add(Integer.parseInt(s)));
-        //System.out.println(endpoints);
-        
+        //System.out.println(endpoints);        
         temp = Arrays.asList(input.get(1).split(" "));
         //temp.forEach(s -> videos.add(Integer.parseInt(s)));
         
