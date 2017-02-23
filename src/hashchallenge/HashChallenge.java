@@ -40,39 +40,48 @@ public class HashChallenge {
         List<String> temp = Arrays.asList(input.get(0).split(" "));
 
         temp.forEach(s -> endpoints.add(Integer.parseInt(s)));
-        System.out.println(endpoints);
+        //System.out.println(endpoints);
         
         temp = Arrays.asList(input.get(1).split(" "));
         temp.forEach(s -> videos.add(Integer.parseInt(s)));
-       
+        //System.out.println(videos);
 
         for (int i = 2; i < input.size(); i++) {
             temp = Arrays.asList(input.get(i).split(" "));
             List<Integer> tempInts = new ArrayList<>();
 
             temp.forEach(s -> tempInts.add(Integer.parseInt(s)));
-            
+                        
             if (temp.size() == 2) {
                 latencies.add(tempInts);
             } else if (temp.size() == 3) {
                 requests.add(tempInts);
             }
         }
+        //System.out.println(latencies);
+        //System.out.println(requests);
 
     }
 
     private void output() throws IOException {
-        Files.write(Paths.get("output.txt"), output, Charset.defaultCharset());
+        Files.write(Paths.get("out_"+input+".txt"), output, Charset.defaultCharset());
 
     }
 
     /**
      * @param args the command line arguments
+     * @throws java.io.IOException
      */
     public static void main(String[] args) throws IOException {
         // TODO code application logic here
-        HashChallenge hc = new HashChallenge("data/me_at_the_zoo.in");
-        hc.parseInput();
+        String[] inputs = new String[]{"kittens","me_at_the_zoo",
+            "trending_today","videos_worth_spreading"};
+        
+        for (String input : inputs){
+           HashChallenge hc = new HashChallenge("data/"+input+".in");
+           hc.parseInput();     
+        }
+        
     }
 
 }
